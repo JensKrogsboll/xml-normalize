@@ -35,3 +35,5 @@ So - we needed a tool allowing us to efficiently normalize the responses.
 I created such a tool in Java.
 
 And now I have decided to re-invent an enhanced version of it in Kotlin.
+
+Stay tuned...
