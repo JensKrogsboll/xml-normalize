@@ -15,7 +15,7 @@ This strategy presented us with a number challenges - mainly how to handle/ignor
 wanted to accept - such as:
 
 *   The sorting of lists in the response might differ if the no specific order has been enforced.
-*   The ordering of namespaces might differ causing names space prefixes to change.
+*   The ordering of namespaces might differ causing namespace prefixes to change.
 *   The ordering of child nodes within a node might change.
 *   The response might contain metadata nodes whose values will always differ - such as `<RequestReceivedTime>`
 
