@@ -1,5 +1,7 @@
 # XML Normalizer
 
+Status: Working beta version:-)
+
 I am going to create a utility suited for normalizing arbitrary xml documents.
 
 As an exercise I am going to create it with Kotlin and Gradle.
@@ -14,7 +16,7 @@ new version of the SOAP application - and a reference server running the current
 This strategy presented us with a number challenges - mainly how to handle/ignore differences that we 
 wanted to accept - such as:
 
-*   The sorting of lists in the response might differ if the no specific order has been enforced.
+*   The sorting of lists in the response might differ if no specific order has been enforced.
 *   The ordering of namespaces might differ causing namespace prefixes to change.
 *   The ordering of child nodes within a node might change.
 *   The response might contain metadata nodes whose values will always differ - such as `<RequestReceivedTime>`
@@ -28,7 +30,7 @@ But we chose to build a tool that automatically executed each request and subseq
 on the normalized responses.
 
 The normalized responses makes it easy to further investigate the nature of any differences using
-a one of the many tools for visualizing differences between two text files.
+one of the many tools for visualizing differences between two text files.
 
 So - we needed a tool allowing us to efficiently normalize the responses.
 
@@ -36,4 +38,81 @@ I created such a tool in Java.
 
 And now I have decided to re-invent an enhanced version of it in Kotlin.
 
+## Usage
+Something in the neighborhood of:
+
+```java
+// Build configuration
+val cfg: Configuration = Configuration(
+    // Ignores
+    arrayOf(
+        Node("item_number"),
+        Node("price")
+    ),
+    // Sorts
+    arrayOf(
+        Node("product")
+            .addChild(Node("catalog_item")),
+        Node("catalog_item")
+            .addChild(Node("size")),
+        Node("size")
+            .addChild(Node("color_swatch"))
+    )
+)
+
+// Print it
+println(cfg)
+
+// Use it
+val source = File(javaClass.getResource("/some.xml").path)
+val target = File(source.parent,"some.transformed.xml")
+XMLNormalizer(cfg).transform(source, target    
+```
+
+given this input:
+
+```xml
+<?xml version="1.0"?>
+<catalog>
+    <product product_image="cardigan.jpg" description="Cardigan Sweater">
+        <catalog_item gender="Men's" age="2">
+            <item_number>RRX9856</item_number>
+            <price>39.95</price>
+            <size description="Medium">
+                <color_swatch image="red_cardigan.jpg">Red</color_swatch>
+                <color_swatch image="burgundy_cardigan.jpg">Burgundy</color_swatch>
+            </size>
+            <size description="Large">
+                <color_swatch image="burgundy_cardigan.jpg">Burgundy</color_swatch>
+                <color_swatch image="red_cardigan.jpg">Red</color_swatch>
+            </size>
+        </catalog_item>
+        <catalog_item age="5" gender="Women's">
+            <item_number>QWZ5671</item_number>
+            <price>42.50</price>
+            <size description="Small">
+                <color_swatch image="red_cardigan.jpg">Red</color_swatch>
+                <color_swatch image="burgundy_cardigan.jpg">Burgundy</color_swatch>
+                <color_swatch image="navy_cardigan.jpg">Navy</color_swatch>
+            </size>
+            <size description="Medium">
+                <color_swatch image="burgundy_cardigan.jpg">Burgundy</color_swatch>
+                <color_swatch image="red_cardigan.jpg">Red</color_swatch>
+                <color_swatch image="navy_cardigan.jpg">Navy</color_swatch>
+                <color_swatch image="black_cardigan.jpg">Black</color_swatch>
+            </size>
+            <size description="Large">
+                <color_swatch image="navy_cardigan.jpg">Navy</color_swatch>
+                <color_swatch image="black_cardigan.jpg">Black</color_swatch>
+            </size>
+            <size description="Extra Large">
+                <color_swatch image="black_cardigan.jpg">Black</color_swatch>
+                <color_swatch image="burgundy_cardigan.jpg">Burgundy</color_swatch>
+            </size>
+        </catalog_item>
+    </product>
+</catalog>
+```
+
 Stay tuned...
+
