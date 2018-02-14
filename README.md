@@ -41,7 +41,7 @@ And now I have decided to re-invent an enhanced version of it in Kotlin.
 ## Usage
 Something in the neighborhood of:
 
-```java
+```kotlin
 // Build configuration
 val cfg: Configuration = Configuration(
     // Ignores
