@@ -38,6 +38,38 @@ I created such a tool in Java.
 
 And now I have decided to re-invent an enhanced version of it in Kotlin.
 
+## How to build
+You dont need a Gradle installation - it's bundled in the project. 
+Once you have cloned or downloaded the project, just open a Windows command prompt or
+a bash shell. Then "cd" into the project folder and issue a `gradle build` command:
+
+```bash
+$ cd xml-normalize
+
+$ gradle build
+Starting a Gradle Daemon (subsequent builds will be faster)
+:clean
+:compileKotlin
+:compileJava UP-TO-DATE
+:copyMainKotlinClasses
+:processResources
+:classes
+:jar
+:assemble
+:compileTestKotlin
+:compileTestJava
+:copyTestKotlinClasses
+:processTestResources
+:testClasses
+:test
+:check
+:build
+
+BUILD SUCCESSFUL
+
+Total time: 13.745 secs
+```
+
 ## Usage
 Something in the neighborhood of:
 
@@ -113,6 +145,8 @@ given this input:
     </product>
 </catalog>
 ```
+
+Check out the file `src/test/java/JavaTest.java` to see how to use it in a Java context.
 
 Stay tuned...
 
