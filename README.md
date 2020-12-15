@@ -46,7 +46,7 @@ a bash shell. Then "cd" into the project folder and issue a `gradlew build` comm
 ```bash
 $ cd xml-normalize
 
-$ gradle build
+$ gradlew build
 Starting a Gradle Daemon (subsequent builds will be faster)
 :clean
 :compileKotlin
