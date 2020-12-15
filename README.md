@@ -41,7 +41,7 @@ And now I have decided to re-invent an enhanced version of it in Kotlin.
 ## How to build
 You dont need a Gradle installation - it's bundled in the project. 
 Once you have cloned or downloaded the project, just open a Windows command prompt or
-a bash shell. Then "cd" into the project folder and issue a `gradle build` command:
+a bash shell. Then "cd" into the project folder and issue a `gradlew build` command:
 
 ```bash
 $ cd xml-normalize
