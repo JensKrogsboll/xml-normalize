@@ -148,5 +148,8 @@ given this input:
 
 Check out the file `src/test/java/JavaTest.java` to see how to use it in a Java context.
 
+## Java Only
+I have added branch java-only with a Java only version of the project.
+
 Stay tuned...
 
