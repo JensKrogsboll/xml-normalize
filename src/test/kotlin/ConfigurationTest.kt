@@ -4,8 +4,10 @@ import dk.itealisten.xmlnormalize.XMLNormalizer
 import org.junit.Assert
 import org.junit.Test;
 import java.io.File
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
 
-public class ConfigurationTest {
+class ConfigurationTest {
 
     @Test
     fun basicTest() {
@@ -33,9 +35,15 @@ public class ConfigurationTest {
 
         // Use it
         val source = File(javaClass.getResource("/some.xml").path)
+        val expected = File(javaClass.getResource("/some.transformed.expected.xml").path)
         val target = File(source.parent,"some.transformed.xml")
-        XMLNormalizer(cfg).transform(source, target)
 
+        XMLNormalizer(cfg).transform(source, target)
         Assert.assertTrue("Target file was not created", target.exists())
+
+        val expectedText = String(Files.readAllBytes(expected.toPath()), StandardCharsets.UTF_8)
+        val targetText = String(Files.readAllBytes(target.toPath()), StandardCharsets.UTF_8)
+        Assert.assertEquals("The transformation target content differs from the reference:", expectedText, targetText)
+
     }
 }
