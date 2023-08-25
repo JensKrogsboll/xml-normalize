@@ -1,6 +1,5 @@
 package dk.itealisten.xmlnormalize
 
-import com.google.common.base.Joiner
 import java.io.*
 import java.util.*
 import javax.xml.transform.*
@@ -55,9 +54,7 @@ constructor(configuration: Configuration) {
     private fun buildSortMap(sorts: Array<Node>): MutableMap<String, Collection<String>> {
         val sortMap = TreeMap<String, Collection<String>>()
         for (parent in sorts) {
-            if (sortMap.keys.contains(parent.name)) {
-                throw IllegalArgumentException("Duplicate sort parent: " + parent.name)
-            }
+            require(!sortMap.keys.contains(parent.name)) {"Duplicate sort parent: " + parent.name}
             sortMap[parent.name] = parent.getChildren().map { it.name }
         }
         return sortMap
@@ -77,14 +74,14 @@ constructor(configuration: Configuration) {
         stack: String) {
 
         if (entry != null) {
-            for (sort in sortMap[entry]!!) {
+            for (sort in sortMap.getValue(entry)) {
                 if (!stack.contains("|$sort|") && sortMap.containsKey(sort)) {
                     sortSortMap(sortMap, sortedMap, sort, stack + sort + "|")
                 }
             }
 
             if (!sortedMap.containsKey(entry)) {
-                sortedMap[entry] = sortMap[entry]!!
+                sortedMap[entry] = sortMap.getValue(entry)
                 sortMap.remove(entry)
             }
         }
@@ -102,7 +99,7 @@ constructor(configuration: Configuration) {
      */
     private fun buildIgnoreXslt(ignores: Array<Node>): String {
         return XSLT_IGNORE
-            .replace("{ignoreList}", Joiner.on('|').join(ignores.map { it.name }))
+            .replace("{ignoreList}", ignores.map { it.name }.joinToString("|"))
     }
 
 
