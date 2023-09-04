@@ -6,6 +6,14 @@ I am going to create a utility suited for normalizing arbitrary xml documents.
 
 As an exercise I am going to create it with Kotlin and Gradle.
 
+<!-- TOC -->
+* [XML Normalizer](#xml-normalizer)
+  * [Purpose](#purpose)
+  * [How to build](#how-to-build)
+  * [Usage](#usage)
+  * [Java Only](#java-only)
+<!-- TOC -->
+
 ## Purpose
 I recently worked in a team where we did regression testing of a SOAP service application
 based on replaying a collection of SOAP requests.
@@ -149,7 +157,7 @@ given this input:
 Check out the file `src/test/java/JavaTest.java` to see how to use it in a Java context.
 
 ## Java Only
-I have added branch java-only with a Java only version of the project.
+I have added branch `java-only` with a Java only version of the project.
 
 Stay tuned...
 
